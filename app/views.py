@@ -9,6 +9,18 @@ class WordViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows users to be viewed or edited.
     """
-    queryset = Word.objects.all().order_by('points')
+    queryset = Word.objects.all().order_by('id')
     serializer_class = WordSerializer
     # permission_classes = [permissions.IsAuthenticated]
+
+    def get_queryset(self):
+        """
+        Return data for specified word.
+        """
+        # word = self.kwargs['word']
+        # return Word.objects.filter(word=word)
+        queryset = Word.objects.all()
+        word = self.request.query_params.get('word')
+        if word is not None:
+            queryset = queryset.filter(word=word)
+        return queryset

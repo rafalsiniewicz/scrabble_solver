@@ -1,12 +1,9 @@
 // import { factorial } from 'mathjs';
 // const URL='http://www.pfs.org.pl/files/php/osps_funkcje3.php',
-const URL='https://scrabble123.pl/checkWordForm'
-	METHOD = 'POST';
+var	METHOD = 'GET';
 var response;
 var existing_words = [];
 var words_counter = 0;
-var LETTER_POINTS = {'A': 1, 'Ą': 5, 'B': 3, 'C': 2, 'Ć': 6, 'D': 2, 'E': 1, 'Ę': 5, 'F': 5, 'G': 3, 'H': 3, 'I': 1, 'J': 3, 'K': 2, 'L': 2, 'M': 2, 'N': 1, 'Ń': 7, 'O': 1, 'Ó': 5, 'P': 2, 
-					'R': 1, 'S': 1, 'Ś': 5, 'T': 2, 'U': 3, 'W': 1, 'Y': 2, 'Z': 1, 'Ź': 9, 'Ż': 5};
 
 function sleep (time) {
   return new Promise((resolve) => setTimeout(resolve, time));
@@ -19,11 +16,14 @@ function checkWordCorrectness(word) {
 	const Http = new XMLHttpRequest();
 	// alert("7");
 	// var params = 's=spr&slowo_arbiter2=' + word;
-	var params = 'checkWord=' + word;
+	// var params = '?word=' + word;
+	// alert(params);
+	var URL='http://127.0.0.1:8000/words?word=' + word;
 	
 	Http.open(METHOD, URL, true);
 	Http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-	Http.send(params);
+	Http.responseType = 'json';
+	Http.send();
 	
 	Http.onreadystatechange = (e) => {
 		// var status = Http.status;
@@ -33,21 +33,24 @@ function checkWordCorrectness(word) {
 			{
 				words_counter += 1;
 				// console.log(words_counter);
-				response = Http.responseText;
+				response = Http.response;
+				// alert(typeof response);
+				console.log(response);
 				// alert(response);
-				// console.log(response);
 				// if (response === '1'){
-				if (response.includes("text-success")){	
+				if (response.count > 0){	
 					// console.log("yes");
-					add_to_existing_words(word);
+					// console.log(response);
+					add_to_existing_words(response.results[0].word + "\t" + response.results[0].points);
 					// alert("yes");
 				}
+				// add_to_existing_words(word);
 				// else{
 				// 	// console.log("no");
 				// }
 			}
 			else{
-			console.log("problem with request from: " + URL);
+				console.log("[Error] Http.status = " + Http.status + ". Problem with request from: " + URL);
 			}
 			if (words_counter === number_of_words)
 			{
@@ -55,6 +58,10 @@ function checkWordCorrectness(word) {
 			}
 
 		}
+		// else
+		// {
+		// 	console.log("[Error] Http.readyState = " + Http.readyState);
+		// }
 	  	//console.log(Http.responseText)
 	}
 	
@@ -78,6 +85,10 @@ function get_list_of_existing_words()
 		show_on_page += word + "\n";
 	}
 	show_on_page = show_on_page.replace(/(\r\n|\n|\r)/gm, "<br>");
+	if (show_on_page == '')
+	{
+		show_on_page = "There are no existing words for those letters!"
+	}
 	document.getElementById("demo2").innerHTML = show_on_page;
 }
 
@@ -100,22 +111,12 @@ const arrToInstanceCountObj = arr => arr.reduce((obj, e) => {
 	obj[e] = (obj[e] || 0) + 1;
 	return obj;
   }, {});
-  
-//   arrToInstanceCountObj(['h', 'e', 'l', 'l', 'o', 'w', 'o', 'r', 'l', 'd'])
-  /*
-	{
-	  h: 1,
-	  e: 1,
-	  l: 3,
-	  o: 2,
-	  w: 1,
-	  r: 1,
-	  d: 1,
-	}
-  */
+
 
 function get_all_letters_permutations(letters)
 {
+	// get all permutations without without repetition
+	// console.log("comb " + words);
 	occurrences = arrToInstanceCountObj(letters);
 	n = factorial(letters.length);
 	for (const letter in occurrences)
@@ -123,16 +124,17 @@ function get_all_letters_permutations(letters)
 		n /= factorial(occurrences[letter]);
 	}
 	// alert("tutaj " + n);
-	while(words.length != n)
+	permutations = [];
+	while(permutations.length < n)
 	{
 
-		if (words.length === 0) 
+		if (permutations.length === 0) 
 		{
 			// alert("fista");
 			w = letters.join("");
-			words.push(w);
+			permutations.push(w);
 			// alert(w);
-			// alert(words);
+			// alert(permutations);
 			
 		} 
 		else 
@@ -144,27 +146,71 @@ function get_all_letters_permutations(letters)
 			.map(({ value }) => value)
 			word = shuffled.join("");
 			// alert(word);
-			if(!(words.includes(word)))
+			if(!(permutations.includes(word)))
 			{
-				words.push(word);
+				permutations.push(word);
 			}
 			// alert("after word");
 			
 		}
-		// alert(words);
+		// alert(permutations);
 		// alert(i);
+	}
+	for (var i of permutations) {
+		words.push(i);
 	}
 	
 
 }
 
+function convert_To_Len_th_base(arr, len)
+{
+    // Sequence is of length len
+	for (var i = 0; i < parseInt(Math.pow(len, len)); i++) {
+		n = i;
+		wo = '';
+		arr2 = [...arr];
+		for ( j = 0; j < len; j++) {
+			// Print the ith element
+			// of sequence
+			wo += arr2[n % len];
+			// alert(arr);
+			arr2[n % len] = '';
+			// alert(arr);
+			n = parseInt(n / len);
+		}
+		words.push(wo);
+	}
+}
+ 
+// Print all the permuataions
+// function print( arr, len, L)
+// {
+//     // There can be (len)^l
+//     // permutations
+//     for (var i = 0; i < parseInt(Math.pow(len, L)); i++) {
+//         // Convert i to len th base
+//         convert_To_Len_th_base(i, arr, len, L);
+//     }
+// }
+
 
 function get_words()
 {
 	var letters = document.getElementById('letters').value.replace(/\s/g, '').split(",");
+	// print(arr,len,L);
+	convert_To_Len_th_base(letters, letters.length);
+	// alert(words);
 	// alert(letters);
-	get_all_letters_permutations(letters);
-	number_of_words = words.length;
+	// get_all_letters_permutations(letters);
+	// alert(letters);
+	// while (letters.length > 0)
+	// {
+	// 	get_all_letters_permutations(letters);
+	// 	letters.pop();
+	// 	alert(letters);
+	// }
+	// number_of_words = words.length;
 	// alert(number_of_words);
 	// for (let i=0; i < number_of_words; i++)
 	// 	alert(words[i]);
@@ -184,16 +230,58 @@ function run_check()
 	// alert("words" + words);
 	reset_variables();
 	get_words();
+	readTextFile(file="sjp-20210625\\slowa2.txt");
 	// alert("words" + words);
-	for (let i=0; i < words.length; i++) {
-		// alert(words[i]);
-		// alert("2");
-		checkWordCorrectness(words[i]);
-		// alert("3");
-		// console.log(response);
-		  // console.log(existing_words);
-	  }
+	// for (let i=0; i < words.length; i++) {
+	// 	// alert(words[i]);
+	// 	// alert("2");
+	// 	checkWordCorrectness(words[i]);
+	// 	// sleep(1000);
+	// 	// alert("3");
+	// 	// console.log(response);
+	// 	  // console.log(existing_words);
+	//   }
 }
+
+var allText = '';
+
+function readTextFile(file)
+{
+    var rawFile = new XMLHttpRequest();
+    rawFile.open("GET", file, false);
+    rawFile.onreadystatechange = function ()
+    {
+        if(rawFile.readyState === 4)
+        {
+            if(rawFile.status === 200 || rawFile.status == 0)
+            {
+				allText = rawFile.responseText;
+				show_text();
+            }
+        }
+    }
+	rawFile.send(null);
+	
+}
+
+function show_text()
+{
+	// console.log("allText\n");
+	lines = allText.split("\r\n");
+	for(var line = 0; line < lines.length; line++){
+		// console.log(lines[line]);
+		// console.log(lines[line] === "aa");
+		// console.log(typeof(lines[line]));
+		word = lines[line].split(" ")[0]
+		points = lines[line].split(" ")[1]
+		if (words.includes(word))
+		{
+			existing_words.push(word + "\t" + points);
+		}
+	}
+	get_list_of_existing_words();
+}
+	
 
 window.run_check = run_check;
 
@@ -218,3 +306,5 @@ window.run_check = run_check;
 //   xhttp.open("GET", "ajax_info.txt", true);
 //   xhttp.send();
 // }
+
+
