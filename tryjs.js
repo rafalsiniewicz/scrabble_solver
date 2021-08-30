@@ -2,7 +2,7 @@
 // const URL='http://www.pfs.org.pl/files/php/osps_funkcje3.php',
 var	METHOD = 'GET';
 var response;
-var existing_words = [];
+var existing_words = {};
 var words_counter = 0;
 
 function sleep (time) {
@@ -68,9 +68,9 @@ function checkWordCorrectness(word) {
 	// console.log(response);
 }
 
-function add_to_existing_words(word)
+function add_to_existing_words(word, points)
 {
-	existing_words.push(word);
+	existing_words[word] = points;
 	// console.log(existing_words);
 }
 
@@ -79,17 +79,104 @@ function get_list_of_existing_words()
 	var show_on_page = '';
 	console.log("Existing words");
 	// alert("Existing words 2 " + existing_words);
-	for (const word of existing_words)
+	for (const word in existing_words)
 	{
 		console.log("Word: " + word);
-		show_on_page += word + "\n";
 	}
-	show_on_page = show_on_page.replace(/(\r\n|\n|\r)/gm, "<br>");
+	show_on_page = show_on_page.replace(/(\r\n|\n|\r)/gm, "");
 	if (show_on_page == '')
 	{
 		show_on_page = "There are no existing words for those letters!"
 	}
-	document.getElementById("demo2").innerHTML = show_on_page;
+	existing_words = sort_dict_by_value(existing_words);
+	generate_table(innerhtml=existing_words);
+}
+
+function sort_dict_by_value(dict)
+{
+	var values = Object.keys(dict).map(function(key){
+		return dict[key];
+	});
+	values.sort(function(a, b) {
+		return b - a;
+	  });
+	const sorted_dict = new Map();
+	for (let i = 0; i < values.length; i++)
+	{
+		for (var key in dict)
+		{
+			if (values[i] == dict[key]) 
+			{
+				sorted_dict[key] = values[i];
+				delete dict[key];
+				break;
+			}
+		}
+	}
+	console.log(values);
+	console.log(sorted_dict);
+	return sorted_dict;
+}
+
+function generate_table(innerhtml)
+{
+	// for (const word in existing_words)
+	// {
+	// 	console.log(word + " = " + existing_words[word]);
+	// }
+	// get the reference for the body
+	var body = document.getElementsByTagName("body")[0];
+	t = document.getElementById('table');
+	if (t != null)
+	{
+		t.parentNode.removeChild(t);
+	}
+	// creates a <table> element and a <tbody> element
+	var tbl = document.createElement("table");
+	tbl.id = "table";
+	var tblBody = document.createElement("tbody");
+	tblBody.id = "tbody";
+	
+	header_text = ["Word", "Points"];
+	// create table header 
+	var row = document.createElement("tr");
+	for (var i = 0; i < 2; i++) {
+		var header = document.createElement("th");
+		var headerText = document.createTextNode(header_text[i]);
+		header.appendChild(headerText);
+		row.appendChild(header);
+	}
+	tblBody.appendChild(row);
+
+	// creating all cells
+	for (var i = 0; i < Object.keys(innerhtml).length; i++) {
+		// creates a table row
+		var row = document.createElement("tr");
+
+		for (var j = 0; j < 2; j++) {
+			// Create a <td> element and a text node, make the text
+			// node the contents of the <td>, and put the <td> at
+			// the end of the table row
+			var cell = document.createElement("td");
+			key = Object.keys(innerhtml)[i];
+			if (j == 0) var cellText = document.createTextNode(key);
+			else var cellText = document.createTextNode(innerhtml[key]);
+			cell.appendChild(cellText);
+			row.appendChild(cell);
+		}
+
+		// add the row to the end of the table body
+		tblBody.appendChild(row);
+	}
+
+	// put the <tbody> in the <table>
+	tbl.appendChild(tblBody);
+	// appends <table> into <body>
+	body.appendChild(tbl);
+	// sets the border attribute of tbl to 2;
+	tbl.setAttribute("border", "2");
+	// document.getElementById("demo2").innerHTML = innerhtml;
+
 }
 
 
@@ -214,14 +301,16 @@ function get_words()
 	// alert(number_of_words);
 	// for (let i=0; i < number_of_words; i++)
 	// 	alert(words[i]);
+	return letters;
 	
 }
 
 function reset_variables ()
 {
-	existing_words = [];
+	existing_words = {};
 	words = [];
 	words_counter = 0;
+	
 }
 
 function run_check()
@@ -229,8 +318,14 @@ function run_check()
 	// alert("existing_words " + existing_words);
 	// alert("words" + words);
 	reset_variables();
-	get_words();
-	readTextFile(file="sjp-20210625\\slowa2.txt");
+	// get_words();
+	// readTextFile(file="sjp-20210625\\slowa2.txt");
+	letters = get_words();
+	for (const l of letters)
+	{
+		readTextFile(file="sjp-20210625\\words_by_letters\\" + l + ".txt");
+	}
+	
 	// alert("words" + words);
 	// for (let i=0; i < words.length; i++) {
 	// 	// alert(words[i]);
@@ -243,11 +338,12 @@ function run_check()
 	//   }
 }
 
-var allText = '';
+
 
 function readTextFile(file)
 {
-    var rawFile = new XMLHttpRequest();
+    var allText = '';
+	var rawFile = new XMLHttpRequest();
     rawFile.open("GET", file, false);
     rawFile.onreadystatechange = function ()
     {
@@ -256,7 +352,7 @@ function readTextFile(file)
             if(rawFile.status === 200 || rawFile.status == 0)
             {
 				allText = rawFile.responseText;
-				show_text();
+				show_text(allText);
             }
         }
     }
@@ -264,7 +360,7 @@ function readTextFile(file)
 	
 }
 
-function show_text()
+function show_text(allText)
 {
 	// console.log("allText\n");
 	lines = allText.split("\r\n");
@@ -274,9 +370,10 @@ function show_text()
 		// console.log(typeof(lines[line]));
 		word = lines[line].split(" ")[0]
 		points = lines[line].split(" ")[1]
+		// console.log(word);
 		if (words.includes(word))
 		{
-			existing_words.push(word + "\t" + points);
+			existing_words[word] = points;
 		}
 	}
 	get_list_of_existing_words();
