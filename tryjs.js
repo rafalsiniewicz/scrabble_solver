@@ -335,16 +335,6 @@ function readTextFile(file) {
   rawFile.send(null)
 }
 
-function get_os() {
-  var name = 'Not known'
-  if (navigator.userAgent.indexOf('Win') != -1) name = 'Windows OS'
-  if (navigator.userAgent.indexOf('Mac') != -1) name = 'Macintosh'
-  if (navigator.userAgent.indexOf('Linux') != -1) name = 'Linux OS'
-  if (navigator.userAgent.indexOf('Android') != -1) name = 'Android OS'
-  if (navigator.userAgent.indexOf('like Mac') != -1) name = 'iOS'
-  return name
-}
-
 function show_text(allText) {
   // Windows: '\r\n'
   // Mac (OS 9-): '\r'
@@ -354,12 +344,7 @@ function show_text(allText) {
   // console.log("allText\n");
 
   // TODO refactor below code
-  os_name = get_os()
-  if (os_name == 'Windows OS') {
-    separator = '\r\n'
-  } else if (os_name == 'Linux OS') {
-    separator = '\n'
-  }
+  allText = allText.replace(/[\r\n]+/g, '\n')
   lines = allText.split('\n')
   for (var line = 0; line < lines.length; line++) {
     // console.log(lines[line]);
