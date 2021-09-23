@@ -1,0 +1,8 @@
+id 3
+ii 2
+il 3
+ił 4
+im 3
+in 2
+iw 2
+iż 6

@@ -1,0 +1,15 @@
+od 3
+oh 4
+oj 4
+ok 3
+om 3
+on 2
+oń 8
+oo 2
+op 3
+or 2
+os 2
+oś 6
+ot 3
+oz 2
+oż 6

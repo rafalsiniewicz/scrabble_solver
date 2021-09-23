@@ -1,0 +1,6 @@
+ba 4
+be 4
+bi 4
+bo 4
+bu 6
+by 5

@@ -1,0 +1,5 @@
+na 2
+ni 2
+no 2
+nu 4
+ny 3

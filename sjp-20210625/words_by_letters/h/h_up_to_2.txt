@@ -1,0 +1,7 @@
+ha 4
+he 4
+hę 8
+hi 4
+hm 5
+ho 4
+hu 6

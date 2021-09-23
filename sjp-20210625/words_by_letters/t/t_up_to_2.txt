@@ -1,0 +1,8 @@
+ta 3
+tą 7
+te 3
+tę 7
+to 3
+ts 3
+tu 5
+ty 4

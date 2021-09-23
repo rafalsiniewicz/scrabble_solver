@@ -1,0 +1,11 @@
+aa 2
+ad 3
+ag 4
+aj 4
+al 3
+am 3
+ar 2
+as 2
+at 3
+au 4
+aż 6
