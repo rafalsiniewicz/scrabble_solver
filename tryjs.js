@@ -337,7 +337,7 @@ function readTextFile(file) {
 
 function show_text(allText) {
   // console.log("allText\n");
-  lines = allText.split('\r\n')
+  lines = allText.split('\n')
   for (var line = 0; line < lines.length; line++) {
     // console.log(lines[line]);
     // console.log(lines[line] === "aa");
