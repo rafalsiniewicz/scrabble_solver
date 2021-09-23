@@ -360,7 +360,7 @@ function show_text(allText) {
   } else if (os_name == 'Linux OS') {
     separator = '\n'
   }
-  lines = allText.split(separator)
+  lines = allText.split('\n')
   for (var line = 0; line < lines.length; line++) {
     // console.log(lines[line]);
     // console.log(lines[line] === "aa");
