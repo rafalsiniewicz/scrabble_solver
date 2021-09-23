@@ -80,7 +80,7 @@ function get_list_of_existing_words() {
   console.log('Existing words')
   // alert("Existing words 2 " + existing_words);
   for (const word in existing_words) {
-    console.log('Word: ' + word)
+    console.log('Word: ' + word + ', Points: ' + existing_words[word])
   }
   show_on_page = show_on_page.replace(/(\r\n|\n|\r)/gm, '')
   if (show_on_page == '') {
