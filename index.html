@@ -2,29 +2,29 @@
 <html lang="pl-PL">
   <head>
     <script type="text/javascript" src="tryjs.js"></script>
-    <style>
-      table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-      }
-
-      td,
-      th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-
-      tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-    </style>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
   </head>
   <body>
+    <nav>
+      <input type="checkbox" id="check" />
+      <label for="check" class="checkbtn">
+        <i class="fa fa-bars"></i>
+      </label>
+      <label class="logo">Scrabble solver</label>
+      <ul>
+        <li><a class="active" href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </nav>
     <div id="demo">
-      <h1>Scrabble solver</h1>
-
       <form>
         <label for="lettes">Letters:</label>
         <br />
