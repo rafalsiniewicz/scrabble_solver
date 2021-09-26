@@ -77,11 +77,11 @@ function add_to_existing_words(word, points) {
 
 function get_list_of_existing_words() {
   var show_on_page = ''
-  console.log('Existing words')
-  // alert("Existing words 2 " + existing_words);
-  for (const word in existing_words) {
-    console.log('Word: ' + word + ', Points: ' + existing_words[word])
-  }
+  // console.log('Existing words')
+  // // alert("Existing words 2 " + existing_words);
+  // for (const word in existing_words) {
+  //   console.log('Word: ' + word + ', Points: ' + existing_words[word])
+  // }
   show_on_page = show_on_page.replace(/(\r\n|\n|\r)/gm, '')
   if (show_on_page == '') {
     show_on_page = 'There are no existing words for those letters!'
@@ -107,8 +107,8 @@ function sort_dict_by_value(dict) {
       }
     }
   }
-  console.log(values)
-  console.log(sorted_dict)
+  // console.log(values)
+  // console.log(sorted_dict)
   return sorted_dict
 }
 
@@ -245,10 +245,20 @@ function convert_To_Len_th_base(arr, len) {
     }
     // words.push(wo)
     if (wo[0] in words) {
+      // if (!words[wo[0]].includes(wo)) {
       words[wo[0]].push(wo)
+      // }
     } else {
       words[wo[0]] = [wo]
     }
+    // console.log(words)
+  }
+  remove_duplicates()
+}
+
+function remove_duplicates() {
+  for (let key in words) {
+    words[key] = [...new Set(words[key])]
   }
 }
 
