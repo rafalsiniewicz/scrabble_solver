@@ -170,7 +170,7 @@ function generate_table(innerhtml) {
   // document.getElementById("demo2").innerHTML = innerhtml;
 }
 
-var words = []
+var words = {}
 var number_of_words = 0
 
 function factorial(num) {
@@ -243,7 +243,12 @@ function convert_To_Len_th_base(arr, len) {
       // alert(arr);
       n = parseInt(n / len)
     }
-    words.push(wo)
+    // words.push(wo)
+    if (wo[0] in words) {
+      words[wo[0]].push(wo)
+    } else {
+      words[wo[0]] = [wo]
+    }
   }
 }
 
@@ -284,7 +289,7 @@ function get_words() {
 
 function reset_variables() {
   existing_words = {}
-  words = []
+  words = {}
   words_counter = 0
 }
 
@@ -295,6 +300,9 @@ function run_check() {
   // get_words();
   // readTextFile(file="sjp-20210625\\slowa2.txt");
   letters = get_words()
+  for (const [key, value] of Object.entries(words)) {
+    console.log(key, value)
+  }
   for (const l of letters) {
     readTextFile(
       (file =
@@ -305,6 +313,7 @@ function run_check() {
         '_up_to_' +
         letters.length.toString() +
         '.txt'),
+      (letter = l),
     )
   }
 
@@ -320,7 +329,7 @@ function run_check() {
   //   }
 }
 
-function readTextFile(file) {
+function readTextFile(file, letter) {
   var allText = ''
   var rawFile = new XMLHttpRequest()
   rawFile.open('GET', file, false)
@@ -328,14 +337,14 @@ function readTextFile(file) {
     if (rawFile.readyState === 4) {
       if (rawFile.status === 200 || rawFile.status == 0) {
         allText = rawFile.responseText
-        show_text(allText)
+        show_text(allText, (letter = letter))
       }
     }
   }
   rawFile.send(null)
 }
 
-function show_text(allText) {
+function show_text(allText, letter) {
   // Windows: '\r\n'
   // Mac (OS 9-): '\r'
   // Mac (OS 10+): '\n'
@@ -353,7 +362,7 @@ function show_text(allText) {
     word = lines[line].split(' ')[0]
     points = lines[line].split(' ')[1]
     // console.log(word);
-    if (words.includes(word)) {
+    if (words[letter].includes(word)) {
       existing_words[word] = points
     }
   }
