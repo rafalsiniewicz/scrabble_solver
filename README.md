@@ -11,7 +11,3 @@ Scrabble solver is the website application that allows to find the best words fo
 - created in html/js/css
 - website: [scrabble-solver](https://scrabble-solver.netlify.app/)
 
-
-##### Project JIRA:
-[JIRA](https://knowledge3materials.atlassian.net/jira/software/projects/SS/boards/1)
-
