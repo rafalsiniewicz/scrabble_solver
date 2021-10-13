@@ -10,3 +10,4 @@ Scrabble solver is the website application that allows to find the best words fo
 ##### Frontend:
 - created in html/js/css
 - website: [scrabble-solver](https://scrabble-solver.netlify.app/)
+
