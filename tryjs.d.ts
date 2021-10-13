@@ -1,2 +1,2 @@
 declare module 'xmlhttprequest';
-import { factorial } from 'mathjs';
+// import { factorial } from 'mathjs';

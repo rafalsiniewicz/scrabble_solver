@@ -112,6 +112,8 @@ function sort_dict_by_value(dict) {
   return sorted_dict
 }
 
+module.exports = {sort_dict_by_value, factorial};
+
 function generate_table(innerhtml) {
   // for (const word in existing_words)
   // {
@@ -246,14 +248,14 @@ function convert_To_Len_th_base(arr, len) {
     // words.push(wo)
     if (wo[0] in words) {
       // if (!words[wo[0]].includes(wo)) {
-      words[wo[0]].push(wo)
+      words[wo[0]].add(wo)
       // }
     } else {
-      words[wo[0]] = [wo]
+      words[wo[0]] = new Set(wo)
     }
     // console.log(words)
   }
-  remove_duplicates()
+  // remove_duplicates()
 }
 
 function remove_duplicates() {
@@ -372,14 +374,14 @@ function show_text(allText, letter) {
     word = lines[line].split(' ')[0]
     points = lines[line].split(' ')[1]
     // console.log(word);
-    if (words[letter].includes(word)) {
+    if (words[letter].has(word)) {
       existing_words[word] = points
     }
   }
   get_list_of_existing_words()
 }
 
-window.run_check = run_check
+// window.run_check = run_check
 
 // run_check();
 
