@@ -33,8 +33,10 @@
         <br />
         <br />
       </form>
-
-      <button type="button" onclick="run_check()">Change Content</button>
+      <button type="button" id="button">Change Content</button>
+      <script>
+        document.getElementById("button").addEventListener("click", run_check, false);
+      </script>
       <!-- <br> </br> -->
     </div>
 

@@ -17,14 +17,20 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework import routers
 from app import views
+from app.views import get_words_from_letters
 
 router = routers.DefaultRouter()
+router.get_api_root_view().cls.__name__ = "Root API name"
+router.get_api_root_view().cls.__doc__ = "Your Description"
 router.register(r'words', views.WordViewSet)
+# router.register(r'words-from-letters', views.get_words_from_letters, basename='words-from-letters')
+
 
 # Wire up our API using automatic URL routing.
 # Additionally, we include login URLs for the browsable API.
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
+    path('words-from-letters/', get_words_from_letters),
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
