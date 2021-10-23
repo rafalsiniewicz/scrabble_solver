@@ -1,9 +1,12 @@
 /sjp-20210625/words_by_letters
-/sjp-20210625/slowa2
-/sjp-20210625/slowa3
+/sjp-20210625/README.txt
+/sjp-20210625/slowa2.txt
+/sjp-20210625/slowa3.txt
 /node_modules
 /tests
 /coverage
 *.js
 *.json
 *.html
+*.css
+/.vscode
