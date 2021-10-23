@@ -21,9 +21,9 @@ def write_points():
 
 def remove_long_words():
     f = open("short_words.txt", "a")
-    with open(os.path.join("sjp-20210625","slowa.txt"), 'r', encoding='utf-8') as fp:
+    with open(os.path.join("sjp-20210625","slowa.txt"), 'r') as fp:
         for line in fp:
-            if len(line) <= 12:
+            if len(line) <= 13:
                 f.write(line)
 
     f.close()
