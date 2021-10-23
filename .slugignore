@@ -1,0 +1,9 @@
+/sjp-20210625/words_by_letters
+/sjp-20210625/slowa2
+/sjp-20210625/slowa3
+/node_modules
+/tests
+/coverage
+*.js
+*.json
+*.html
