@@ -4,7 +4,6 @@ from typing import Optional, Any
 import time
 import os
 
-
 class AppConfig(AppConfig):
     name = 'app'
     def __init__(self, app_name: str, app_module: Optional[Any]) -> None:
@@ -13,11 +12,9 @@ class AppConfig(AppConfig):
 
     def ready(self) -> None:
         start = time.time()
-        i = 0
         with open(os.path.join("sjp-20210625","slowa.txt"), 'r', encoding='utf-8') as fp:
             for line in fp:
-                i += 1
-                # self.trie.insert(str(line.strip('\n')))
+                self.trie.insert(str(line.strip('\n')))
         
         end = time.time()
         print("time elapsed = ", end - start)
