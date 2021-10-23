@@ -1,4 +1,4 @@
-const URL='http://127.0.0.1:8000/words-from-letters?letters=', 
+const URL='https://scrabble-solver-app.herokuapp.com/words-from-letters/?letters=', 
       METHOD = 'GET';
 
 function checkWordCorrectness(letters) {
