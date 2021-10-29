@@ -8,7 +8,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import WordSerializer
 from django.http import JsonResponse
-
+import time
 
 class WordViewSet(viewsets.ModelViewSet):
     """
@@ -35,13 +35,19 @@ class WordViewSet(viewsets.ModelViewSet):
 
 def get_words_from_letters(request, *args, **kwargs):
     if request.method == 'GET':
+        start = time.time()
         letters = [ch for ch in request.GET['letters']]
         all_words_from_letters = Words.get_all_words_from_letters(letters=letters)
+        end = time.time()
+        print("time elapsed after generating all words from letters = ", end - start)
+        start = time.time()
         trie = apps.get_app_config('app').trie
         response = {}
         for word in all_words_from_letters:
             if trie.include(word):
                 response[word] = Words.calculate_points(word)
 
+        end = time.time()
+        print("time elapsed after getting existing words from trie = ", end - start)
         return JsonResponse(response, safe=False)
         
