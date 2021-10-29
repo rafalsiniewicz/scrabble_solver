@@ -20,10 +20,10 @@ def write_points():
 
 
 def remove_long_words():
-    f = open("../sjp-20210625/short_words_13.txt", "a")
+    f = open("../sjp-20210625/short_words_11.txt", "a")
     with open(os.path.join("..","sjp-20210625","slowa.txt"), 'r') as fp:
         for line in fp:
-            if len(line) <= 13:
+            if len(line) <= 11:
                 f.write(line)
 
     f.close()
