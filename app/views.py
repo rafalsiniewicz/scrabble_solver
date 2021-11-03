@@ -38,6 +38,7 @@ def get_words_from_letters(request, *args, **kwargs):
         start = time.time()
         letters = [ch for ch in request.GET['letters']]
         all_words_from_letters = Words.get_all_words_from_letters(letters=letters)
+        # print(all_words_from_letters)
         end = time.time()
         print("time elapsed after generating all words from letters = ", end - start)
         start = time.time()
@@ -46,6 +47,8 @@ def get_words_from_letters(request, *args, **kwargs):
         for word in all_words_from_letters:
             if trie.include(word):
                 response[word] = Words.calculate_points(word)
+            # else:
+            #     all_words_from_letters = list(filter(lambda w: not w.startswith(word), all_words_from_letters))
 
         end = time.time()
         print("time elapsed after getting existing words from trie = ", end - start)

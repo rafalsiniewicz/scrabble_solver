@@ -1,6 +1,6 @@
 from typing import List
+from itertools import permutations
 
-from app.models import Word
 class Words:
     LETTER_POINTS = {'A': 1, 'Ą': 5, 'B': 3, 'C': 2, 'Ć': 6, 'D': 2, 'E': 1, 'Ę': 5, 'F': 5, 'G': 3, 'H': 3, 'I': 1, 'J': 3, 'K': 2, 'L': 2, 'Ł': 3, 'M': 2, 'N': 1, 'Ń': 7, 'O': 1, 
 'Ó': 5, 'P': 2, 'R': 1, 'S': 1, 'Ś': 5, 'T': 2, 'U': 3, 'W': 1, 'Y': 2, 'Z': 1, 'Ź': 9, 'Ż': 5}
@@ -27,7 +27,7 @@ class Words:
             for k in range(len(listsub)):
                 if i & 1 << k:
                     subset.append(listsub[k])
-            subsets += [''.join(i) for i in Words.permutation(subset)]
+            subsets += [''.join(i) for i in permutations(subset)]
         return subsets
 
     @staticmethod
