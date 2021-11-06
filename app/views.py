@@ -1,6 +1,7 @@
+import threading
 from django.shortcuts import render
+from rest_framework import response
 from rest_framework.response import Response
-
 from app.words import Words
 from django.apps import apps
 from .models import Word
@@ -8,7 +9,9 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import WordSerializer
 from django.http import JsonResponse
-import time
+import datetime
+
+
 
 class WordViewSet(viewsets.ModelViewSet):
     """
@@ -32,25 +35,23 @@ class WordViewSet(viewsets.ModelViewSet):
         serializer = WordSerializer(words, many=True)
         return Response(serializer.data)
 
-
 def get_words_from_letters(request, *args, **kwargs):
     if request.method == 'GET':
-        start = time.time()
+        response = {}
+        start = datetime.datetime.now()
         letters = [ch for ch in request.GET['letters']]
         all_words_from_letters = Words.get_all_words_from_letters(letters=letters)
-        # print(all_words_from_letters)
-        end = time.time()
-        print("time elapsed after generating all words from letters = ", end - start)
-        start = time.time()
+        print("nr of words to check: ", len(all_words_from_letters))
+        end = datetime.datetime.now()
+        print("time elapsed after generating all words from letters = ", (end - start).total_seconds())
         trie = apps.get_app_config('app').trie
-        response = {}
+        start = datetime.datetime.now()
         for word in all_words_from_letters:
             if trie.include(word):
                 response[word] = Words.calculate_points(word)
             # else:
             #     all_words_from_letters = list(filter(lambda w: not w.startswith(word), all_words_from_letters))
 
-        end = time.time()
-        print("time elapsed after getting existing words from trie = ", end - start)
+        end = datetime.datetime.now()
+        print("time elapsed after all = ", (end - start).total_seconds())
         return JsonResponse(response, safe=False)
-        

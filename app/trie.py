@@ -1,3 +1,4 @@
+from typing import List
 from objsize import get_deep_size
 from itertools import cycle
 import os
@@ -42,11 +43,14 @@ class Trie(object):
 
 
 if __name__ == "__main__":
-   start = time.time()
    trie = Trie()
-   with open("C:\\Users\\rafal\\OneDrive\\Desktop\\projects\\scrabble_solver\\sjp-20210625\\short_words_13.txt", 'r', encoding='utf-8') as fp:
+   with open("C:\\Users\\rafal\\OneDrive\\Desktop\\projects\\scrabble_solver\\sjp-20210625\\short_words.txt", 'r', encoding='utf-8') as fp:
       for line in fp:
-         trie.insert_list(str(line.strip('\n')))
+         trie.insert(str(line.strip('\n')))
+
+   start = time.time()
+   for i in range(10000000):
+      trie.include("babć")
 
    end = time.time()
    print(end - start)
