@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
-#include "other_trie.h"
+#include "trie.h"
 #define PORT 8080
 
 void initialize_trie(Trie* head)
