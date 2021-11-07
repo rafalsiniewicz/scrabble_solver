@@ -1,2 +1,2 @@
-g++ server.cpp -o server
+#!/bin/bash
 ./server
