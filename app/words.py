@@ -20,14 +20,14 @@ class Words:
 
     @staticmethod
     def get_all_words_from_letters(letters: List[str]) -> List:
-        listsub = list(letters)
         subsets = []
-        for i in range(2**len(listsub)):
+        length = len(letters)
+        for i in range(2**length):
             subset = []
-            for k in range(len(listsub)):
+            for k in range(length):
                 if i & 1 << k:
-                    subset.append(listsub[k])
-            subsets += [''.join(i) for i in permutations(subset)]
+                    subset += letters[k]
+            subsets += [''.join(j) for j in permutations(subset)]
         return subsets
 
     @staticmethod

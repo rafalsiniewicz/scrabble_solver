@@ -11,11 +11,12 @@ class AppConfig(AppConfig):
         self.trie = Trie()
 
     def ready(self) -> None:
-        start = time.time()
-        with open(os.path.join("sjp-20210625","short_words_11.txt"), 'r', encoding='utf-8') as fp:
-            for line in fp:
-                self.trie.insert(str(line.strip('\n')))
+        pass
+        # start = time.time()
+        # with open(os.path.join("sjp-20210625","short_words_11.txt"), 'r', encoding='utf-8') as fp:
+        #     for line in fp:
+        #         self.trie.insert(str(line.strip('\n')))
         
-        end = time.time()
-        print("time elapsed = ", end - start)
+        # end = time.time()
+        # print("time elapsed = ", end - start)
 

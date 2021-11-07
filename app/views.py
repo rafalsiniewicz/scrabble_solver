@@ -10,6 +10,7 @@ from rest_framework import permissions
 from .serializers import WordSerializer
 from django.http import JsonResponse
 import datetime
+import socket               # Import socket module
 
 
 
@@ -44,14 +45,21 @@ def get_words_from_letters(request, *args, **kwargs):
         print("nr of words to check: ", len(all_words_from_letters))
         end = datetime.datetime.now()
         print("time elapsed after generating all words from letters = ", (end - start).total_seconds())
-        trie = apps.get_app_config('app').trie
+        # trie = apps.get_app_config('app').trie
         start = datetime.datetime.now()
+
+        s = socket.socket()         # Create a socket object
+        s.connect(('localhost', 8080))
+        
         for word in all_words_from_letters:
-            if trie.include(word):
+            s.sendall(word.encode())
+            data = s.recv(1024)
+            if int(data) == 1:
                 response[word] = Words.calculate_points(word)
             # else:
             #     all_words_from_letters = list(filter(lambda w: not w.startswith(word), all_words_from_letters))
 
+        s.close()
         end = datetime.datetime.now()
         print("time elapsed after all = ", (end - start).total_seconds())
         return JsonResponse(response, safe=False)
