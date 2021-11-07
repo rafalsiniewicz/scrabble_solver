@@ -11,7 +11,8 @@ class AppConfig(AppConfig):
         self.trie = Trie()
 
     def ready(self) -> None:
-        subprocess.run('chmod +x server && ./server')
+        subprocess.run('chmod +x server')
+        subprocess.run('./server')
         # pass
         # start = time.time()
         # with open(os.path.join("sjp-20210625","short_words_11.txt"), 'r', encoding='utf-8') as fp:
