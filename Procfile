@@ -1,2 +1,2 @@
-release: chmod u+x release.sh && ./release.sh
+release: ./server
 web: gunicorn scrabble_solver.wsgi
