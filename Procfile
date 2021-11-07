@@ -1,2 +1,2 @@
-release: rm -f sjp-20210625/slowa.txt sjp-20210625/short_words.txt sjp-20210625/short_words_13.txt 
+release: chmod u+x release.sh && ./release.sh 
 web: gunicorn scrabble_solver.wsgi
