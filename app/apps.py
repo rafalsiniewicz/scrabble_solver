@@ -11,7 +11,7 @@ class AppConfig(AppConfig):
         self.trie = Trie()
 
     def ready(self) -> None:
-        subprocess.run('chmod +x server')
+        subprocess.run(['chmod', '+x', 'server'])
         subprocess.run('./server')
         # pass
         # start = time.time()
