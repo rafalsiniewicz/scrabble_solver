@@ -49,7 +49,7 @@ def get_words_from_letters(request, *args, **kwargs):
         start = datetime.datetime.now()
 
         s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)         # Create a socket object
-        server_address = './socket'
+        server_address = 'socket'
         s.connect(server_address)
         # word = "babć"
         # s.sendall(word.encode())

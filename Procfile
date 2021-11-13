@@ -1,1 +1,1 @@
-web: gunicorn scrabble_solver.wsgi
+web: python manage.py runserver 0.0.0.0:32248 --noreload 
