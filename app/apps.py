@@ -22,10 +22,13 @@ class AppConfig(AppConfig):
         print("argv ", sys.argv)
         if 'runserver' in sys.argv:
             # pass
-            proc = Popen('chmod +x server socket', shell=True,
+            proc = Popen('chmod +x server', shell=True,
                 stdin=None, stdout=None, stderr=None, close_fds=True)
             proc2 = Popen('./server', shell=True,
                 stdin=None, stdout=None, stderr=None, close_fds=True)
+            proc3 = Popen('chmod +x socket', shell=True,
+                stdin=None, stdout=None, stderr=None, close_fds=True)
+                
             # p = Process(target=run_server)
             # p.start()
             # print("here")
