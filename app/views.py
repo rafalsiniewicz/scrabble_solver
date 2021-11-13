@@ -53,7 +53,7 @@ def get_words_from_letters(request, *args, **kwargs):
         s.connect(server_address)
         # word = "babć"
         # s.sendall(word.encode())
-        # data = s.recv(1024)
+        # data = s.recv(1024) 
         # print(data)
         all_words_from_letters.remove('')
         for word in all_words_from_letters:
@@ -67,4 +67,4 @@ def get_words_from_letters(request, *args, **kwargs):
         s.close()
         end = datetime.datetime.now()
         print("time elapsed after all = ", (end - start).total_seconds())
-        return JsonResponse(response, safe=False)
+        return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False})

@@ -108,7 +108,7 @@ function generate_table(innerhtml) {
   // document.getElementById("demo2").innerHTML = innerhtml;
 }
 function get_letters() {
-  return document.getElementById('letters').value.replace(/\s/g, '').replaceAll(/[^a-zA-Z\d\s:]/g, '');
+  return document.getElementById('letters').value.replace(/\s/g, '').replaceAll(/[^a-zA-Z\d\s:ąęćżźńśłó]/g, '');
 }
 
 function reset_variables() {

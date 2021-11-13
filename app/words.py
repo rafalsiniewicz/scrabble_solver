@@ -1,5 +1,6 @@
 from typing import List
 from itertools import permutations
+import datetime
 
 class Words:
     LETTER_POINTS = {'A': 1, 'Ą': 5, 'B': 3, 'C': 2, 'Ć': 6, 'D': 2, 'E': 1, 'Ę': 5, 'F': 5, 'G': 3, 'H': 3, 'I': 1, 'J': 3, 'K': 2, 'L': 2, 'Ł': 3, 'M': 2, 'N': 1, 'Ń': 7, 'O': 1, 
@@ -28,6 +29,10 @@ class Words:
                 if i & 1 << k:
                     subset += letters[k]
             subsets += [''.join(j) for j in permutations(subset)]
+        start = datetime.datetime.now()
+        subsets = list(set(subsets))
+        end = datetime.datetime.now()
+        print("time elapsed removing duplicates = ", (end - start).total_seconds())
         return subsets
 
     @staticmethod
