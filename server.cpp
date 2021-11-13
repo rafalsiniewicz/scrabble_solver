@@ -1,6 +1,7 @@
 #include <unistd.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
+#include <sys/un.h>
 #include "trie.h"
 #define PORT 8080
 
@@ -29,28 +30,30 @@ const wchar_t *GetWC(const char *c, const size_t size)
 int main(int argc, char const *argv[])
 {
     int server_fd, new_socket, valread;
-    struct sockaddr_in address;
+    struct sockaddr_un address;
     int opt = 1;
     int addrlen = sizeof(address);
        
     // Creating socket file descriptor
-    if ((server_fd = socket(AF_INET, SOCK_STREAM, 0)) == 0)
+    if ((server_fd = socket(AF_UNIX, SOCK_STREAM, 0)) == 0)
     {
         perror("socket failed");
         exit(EXIT_FAILURE);
     }
        
     // Forcefully attaching socket to the port 8080
-    if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
-                                                  &opt, sizeof(opt)))
-    {
-        perror("setsockopt");
-        exit(EXIT_FAILURE);
-    }
-    address.sin_family = AF_INET;
-    address.sin_addr.s_addr = INADDR_ANY;
-    address.sin_port = htons( PORT );
-       
+    // if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
+    //                                               &opt, sizeof(opt)))
+    // {
+    //     perror("setsockopt");
+    //     exit(EXIT_FAILURE);
+    // }
+    address.sun_family = AF_UNIX;
+    // address.sin_addr.s_addr = INADDR_ANY;
+    // address.sin_port = htons( PORT );
+    char *path = strcpy(address.sun_path, "/mnt/c/Users/rafal/OneDrive/Desktop/projects/scrabble_solver/socket");
+    unlink(path);
+
     // Forcefully attaching socket to the port 8080
     if (bind(server_fd, (struct sockaddr *)&address, 
                                  sizeof(address))<0)
@@ -92,29 +95,35 @@ int main(int argc, char const *argv[])
             perror("accept");
             exit(EXIT_FAILURE);
         }
-        char buffer[1024] = {0};
-        valread = read( new_socket , buffer, 1024);
-        // for(int i = 0; buffer[i] != '\0'; ++i) {
-        //     ++size;
-        // }
-        // wstring ws(&buffer[0], &buffer[size]);
-        // const wchar_t* ws = GetWC(buffer, size + 1);
-        cout << buffer << endl;
-        string ws(buffer);
-        // cout << ws << endl;
-        // wcout << ws << endl;
-        if (search(head, ws.c_str()) == 1)
+        while(1)
         {
-            send(new_socket , "1", 1 , 0);
+            char buffer[1024] = {0};
+            valread = read( new_socket , buffer, 1024);
+            // for(int i = 0; buffer[i] != '\0'; ++i) {
+            //     ++size;
+            // }
+            // wstring ws(&buffer[0], &buffer[size]);
+            // const wchar_t* ws = GetWC(buffer, size + 1);
+            // cout << buffer << endl;
+            string ws(buffer);
+            // cout << ws << endl;
+            // wcout << ws << endl;
+            if (search(head, ws.c_str()) == 1)
+            {
+                if (send(new_socket , "1", 1 , MSG_NOSIGNAL) < 0)
+                    break;
+            }
+            else if (search(head, ws.c_str()) == 0)
+            {
+                if (send(new_socket , "0", 1 , MSG_NOSIGNAL) < 0)
+                    break;
+            }
+            // printf("%s\n",buffer );
+            // const void* response = reinterpret_cast<const void*>(search(head, ws));
+            // send(new_socket , response, 1 , 0 );
+            // printf("Hello message sent\n");
         }
-        else if (search(head, ws.c_str()) == 0)
-        {
-            send(new_socket , "0", 1 , 0);
-        }
-        // printf("%s\n",buffer );
-        // const void* response = reinterpret_cast<const void*>(search(head, ws));
-        // send(new_socket , response, 1 , 0 );
-        // printf("Hello message sent\n");
+        
     }
     
     return 0;

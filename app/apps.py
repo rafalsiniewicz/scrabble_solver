@@ -2,17 +2,33 @@ from django.apps import AppConfig
 from .trie import Trie
 from typing import Optional, Any
 import time
+from multiprocessing import Process
 import subprocess
+from subprocess import Popen
+
+def run_server():
+	subprocess.run('./server', shell=True)
 
 class AppConfig(AppConfig):
     name = 'app'
-    def __init__(self, app_name: str, app_module: Optional[Any]) -> None:
+    def __init__(self, app_name: str, 
+    
+    app_module: Optional[Any]) -> None:
         super().__init__(app_name, app_module)
-        self.trie = Trie()
+        self.trie = Trie()  
 
     def ready(self) -> None:
-        subprocess.run(['chmod', '+x', 'server'])
-        subprocess.run('./server')
+        # pass
+        proc = Popen('chmod +x server', shell=True,
+             stdin=None, stdout=None, stderr=None, close_fds=True)
+        proc2 = Popen('./server', shell=True,
+             stdin=None, stdout=None, stderr=None, close_fds=True)
+        # p = Process(target=run_server)
+        # p.start()
+        # print("here")
+        # p.join()
+        # os.system('  ')
+        # os.system('./server')
         # pass
         # start = time.time()
         # with open(os.path.join("sjp-20210625","short_words_11.txt"), 'r', encoding='utf-8') as fp:

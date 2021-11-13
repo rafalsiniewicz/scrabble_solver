@@ -48,9 +48,14 @@ def get_words_from_letters(request, *args, **kwargs):
         # trie = apps.get_app_config('app').trie
         start = datetime.datetime.now()
 
-        s = socket.socket()         # Create a socket object
-        s.connect(('localhost', 8080))
-        
+        s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)         # Create a socket object
+        server_address = './socket'
+        s.connect(server_address)
+        # word = "babć"
+        # s.sendall(word.encode())
+        # data = s.recv(1024)
+        # print(data)
+        all_words_from_letters.remove('')
         for word in all_words_from_letters:
             s.sendall(word.encode())
             data = s.recv(1024)
