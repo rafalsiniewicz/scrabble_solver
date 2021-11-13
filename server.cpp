@@ -51,7 +51,7 @@ int main(int argc, char const *argv[])
     address.sun_family = AF_UNIX;
     // address.sin_addr.s_addr = INADDR_ANY;
     // address.sin_port = htons( PORT );
-    char *path = strcpy(address.sun_path, "/mnt/c/Users/rafal/OneDrive/Desktop/projects/scrabble_solver/socket");
+    char *path = strcpy(address.sun_path, "socket");
     unlink(path);
 
     // Forcefully attaching socket to the port 8080
