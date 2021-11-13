@@ -1,7 +1,7 @@
 from django.apps import AppConfig
 from .trie import Trie
 from typing import Optional, Any
-import time
+from time import sleep
 from multiprocessing import Process
 import subprocess
 from subprocess import Popen
@@ -22,13 +22,11 @@ class AppConfig(AppConfig):
         print("argv ", sys.argv)
         if 'runserver' in sys.argv:
             # pass
-            f = open("myfile.txt", "w")
-            f.write("it works")
-            f.close()
             proc = Popen('chmod +x server', shell=True,
                 stdin=None, stdout=None, stderr=None, close_fds=True)
             proc2 = Popen('./server', shell=True,
                 stdin=None, stdout=None, stderr=None, close_fds=True)
+            sleep(3)
             proc3 = Popen('chmod +x socket', shell=True,
                 stdin=None, stdout=None, stderr=None, close_fds=True)
                 
