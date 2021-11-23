@@ -38,33 +38,40 @@ class WordViewSet(viewsets.ModelViewSet):
 
 def get_words_from_letters(request, *args, **kwargs):
     if request.method == 'GET':
+        Words.all_subsets = []
+        trie = apps.get_app_config('app').trie
         response = {}
         start = datetime.datetime.now()
         letters = [ch for ch in request.GET['letters']]
-        all_words_from_letters = Words.get_all_words_from_letters(letters=letters)
+        for l in letters:
+            Words.get_all_subsets(l, letters, trie)
+        all_words_from_letters = Words.all_subsets
+        # all_words_from_letters = Words.get_all_words_from_letters(letters=letters)
         print("nr of words to check: ", len(all_words_from_letters))
         end = datetime.datetime.now()
         print("time elapsed after generating all words from letters = ", (end - start).total_seconds())
         # trie = apps.get_app_config('app').trie
         start = datetime.datetime.now()
 
-        s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)         # Create a socket object
-        server_address = 'socket'
-        s.connect(server_address)
+        # s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)         # Create a socket object
+        # server_address = 'socket'
+        # s.connect(server_address)
         # word = "babć"
         # s.sendall(word.encode())
         # data = s.recv(1024) 
         # print(data)
-        all_words_from_letters.remove('')
+        # all_words_from_letters.remove('')
         for word in all_words_from_letters:
-            s.sendall(word.encode())
-            data = s.recv(1024)
-            if int(data) == 1:
+            if trie.include(word):
                 response[word] = Words.calculate_points(word)
+            # s.sendall(word.encode())
+            # data = s.recv(1024)
+            # if int(data) == 1:
+            #     response[word] = Words.calculate_points(word)
             # else:
             #     all_words_from_letters = list(filter(lambda w: not w.startswith(word), all_words_from_letters))
 
-        s.close()
+        # s.close()
         end = datetime.datetime.now()
         print("time elapsed after all = ", (end - start).total_seconds())
         return JsonResponse(response, safe=False, json_dumps_params={'ensure_ascii': False})

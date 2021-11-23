@@ -142,6 +142,7 @@ bool search(Trie* head, const char* str)
     Trie* curr = head;
     while (*str)
     {
+        cout << *str << endl;
         // go to the next node
         curr = curr->map[*str];
  
@@ -157,6 +158,32 @@ bool search(Trie* head, const char* str)
     // return true if the current node is a leaf and the
     // end of the string is reached
     return curr->isLeaf;
+}
+
+bool startsWith(Trie* head, const char* str)
+{
+    // return false if Trie is empty
+    if (head == nullptr) {
+        return false;
+    }
+ 
+    Trie* curr = head;
+    while (*str)
+    {
+        // go to the next node
+        curr = curr->map[*str];
+ 
+        // if the string is invalid (reached end of a path in the Trie)
+        if (curr == nullptr) {
+            return false;
+        }
+ 
+        // move to the next character
+        str++;
+    }
+ 
+    // trie includes str 
+    return true;
 }
  
 // C++ implementation of Trie data structure

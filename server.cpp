@@ -3,7 +3,11 @@
 #include <netinet/in.h>
 #include <sys/un.h>
 #include "trie.h"
+#include <vector>
+#include <algorithm>
+#include <map>
 #define PORT 8080
+vector<string> subsets;
 
 void initialize_trie(Trie* head)
 {
@@ -18,14 +22,48 @@ void initialize_trie(Trie* head)
     std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[us]" << std::endl;
 }
 
+// TODO remove it below as its not used
+// const wchar_t *GetWC(const char *c, const size_t size)
+// {
+//     wchar_t* wc = new wchar_t[size];
+//     mbstowcs (wc, c, size);
 
-const wchar_t *GetWC(const char *c, const size_t size)
+//     return wc;
+// }
+void get_all_words_from_letters(const string word, const string letters, Trie* head)
 {
-    wchar_t* wc = new wchar_t[size];
-    mbstowcs (wc, c, size);
-
-    return wc;
+    string new_word = word;
+    string wait;
+    string letters_new = letters;
+    auto pos = letters_new.find(word.back());
+    if (pos != std::string::npos)    
+        letters_new.erase(pos,1);
+    // subsets.push_back(new_word);
+    for (std::string::size_type i = 0; i < letters_new.size(); i++) {
+        new_word += letters_new[i];
+        if(startsWith(head, new_word.c_str()))
+        {
+            subsets.push_back(new_word);
+            get_all_words_from_letters(new_word, letters_new, head);
+        }
+        new_word = word;
+    }
 }
+
+int calculate_points(string word)
+{
+    std::map<char, int> LETTER_POINTS = {
+        { 'A', 1 }, { 'Ą', 5 }, { 'B', 3 }, { 'C', 2 }, { 'Ć', 6 }, { 'D', 2 }, { 'E', 1 }, { 'Ę', 5 }, { 'F', 5 }, { 'G', 3 }, { 'H', 3 }, { 'I', 1 }, 
+        { 'J', 3 }, { 'K', 2 }, { 'L', 2 }, { 'Ł', 3 }, { 'M', 2 }, { 'N', 1 }, { 'Ń', 7 }, { 'O', 1 }, { 'Ó', 5 }, { 'P', 2 }, { 'R', 1 }, { 'S', 1 }, 
+        { 'Ś', 5 }, { 'T', 2 }, { 'U', 3 }, { 'W', 1 }, { 'Y', 2 }, { 'Z', 1 }, { 'Ź', 9 }, { 'Ż', 5 }
+    };
+    int points = 0;
+    for (auto &ch: word)
+        points += LETTER_POINTS[toupper(ch)];
+    return points;
+}
+    
+
 
 int main(int argc, char const *argv[])
 {
@@ -95,6 +133,9 @@ int main(int argc, char const *argv[])
             perror("accept");
             exit(EXIT_FAILURE);
         }
+        else{
+            cout << "new accept" << endl;
+        }
         while(1)
         {
             char buffer[1024] = {0};
@@ -105,23 +146,56 @@ int main(int argc, char const *argv[])
             // wstring ws(&buffer[0], &buffer[size]);
             // const wchar_t* ws = GetWC(buffer, size + 1);
             // cout << buffer << endl;
-            string ws(buffer);
+            subsets.clear();
+            string letters(buffer);
+            for(auto &let: letters)
+            {
+                string str{let};
+                // subsets.push_back(str);
+                get_all_words_from_letters(str, letters, head);
+                // thread th(get_all_words_from_letters, str, letters, head);
+                // threads.push_back(move(th));
+            }
             // cout << ws << endl;
             // wcout << ws << endl;
-            if (search(head, ws.c_str()) == 1)
+            
+            string response = "{";
+            // cout << response << endl;
+            // cout << &response << endl;
+            for (auto w: subsets)
             {
-                if (send(new_socket , "1", 1 , MSG_NOSIGNAL) < 0)
-                    break;
+                response += "\"";
+                response += w;
+                response += "\": ";
+                response += to_string(calculate_points(w));
+                response += ", ";
             }
-            else if (search(head, ws.c_str()) == 0)
+            try {
+                response.erase(response.length()-2);
+            }
+            catch(...)
             {
-                if (send(new_socket , "0", 1 , MSG_NOSIGNAL) < 0)
-                    break;
+
             }
+            response += "}";
+            cout << response << endl;
+            if (send(new_socket , response.c_str(), response.length() , MSG_NOSIGNAL) < 0)
+                break;
+            // if (search(head, ws.c_str()) == 1)
+            // {
+            //     if (send(new_socket , yes.c_str(), yes.length() , MSG_NOSIGNAL) < 0)
+            //         break;
+            // }
+            // else if (search(head, ws.c_str()) == 0)
+            // {
+            //     if (send(new_socket , no.c_str(), no.length() , MSG_NOSIGNAL) < 0)
+            //         break;
+            // }
             // printf("%s\n",buffer );
             // const void* response = reinterpret_cast<const void*>(search(head, ws));
             // send(new_socket , response, 1 , 0 );
             // printf("Hello message sent\n");
+            
         }
         
     }

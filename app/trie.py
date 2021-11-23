@@ -33,6 +33,14 @@ class Trie(object):
          current = current[l]
       return '#' in current
 
+   def starts_with(self, word):
+      current = self.child
+      for l in word:
+         if l not in current:
+            return False
+         current = current[l]
+      return True
+
    def include_list(self, word):
       current = self.child_list
       for l in word:

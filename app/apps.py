@@ -1,14 +1,15 @@
 from django.apps import AppConfig
 from .trie import Trie
 from typing import Optional, Any
-from time import sleep
+import time
+import os
 from multiprocessing import Process
 import subprocess
 from subprocess import Popen
 import sys
 
-def run_server():
-	subprocess.run('./server', shell=True)
+# def run_server():
+# 	subprocess.run('./server', shell=True)
 
 class AppConfig(AppConfig):
     name = 'app'
@@ -19,16 +20,16 @@ class AppConfig(AppConfig):
         self.trie = Trie()  
 
     def ready(self) -> None:
-        print("argv ", sys.argv)
-        if 'runserver' in sys.argv:
-            # pass
-            proc = Popen('chmod +x server', shell=True,
-                stdin=None, stdout=None, stderr=None, close_fds=True)
-            proc2 = Popen('./server', shell=True,
-                stdin=None, stdout=None, stderr=None, close_fds=True)
-            sleep(3)
-            proc3 = Popen('chmod +x socket', shell=True,
-                stdin=None, stdout=None, stderr=None, close_fds=True)
+        # print("argv ", sys.argv)
+        # if 'runserver' in sys.argv:
+        #     # pass
+        #     proc = Popen('chmod +x server', shell=True,
+        #         stdin=None, stdout=None, stderr=None, close_fds=True)
+        #     proc2 = Popen('./server', shell=True,
+        #         stdin=None, stdout=None, stderr=None, close_fds=True)
+        #     sleep(3)
+        #     proc3 = Popen('chmod +x socket', shell=True,
+        #         stdin=None, stdout=None, stderr=None, close_fds=True)
                 
             # p = Process(target=run_server)
             # p.start()
@@ -37,11 +38,11 @@ class AppConfig(AppConfig):
             # os.system('  ')
             # os.system('./server')
             # pass
-        # start = time.time()
-        # with open(os.path.join("sjp-20210625","short_words_11.txt"), 'r', encoding='utf-8') as fp:
-        #     for line in fp:
-        #         self.trie.insert(str(line.strip('\n')))
+        start = time.time()
+        with open(os.path.join("sjp-20210625","short_words_11.txt"), 'r', encoding='utf-8') as fp:
+            for line in fp:
+                self.trie.insert(str(line.strip('\n')))
         
-        # end = time.time()
-        # print("time elapsed = ", end - start)
+        end = time.time()
+        print("time elapsed = ", end - start)
 
