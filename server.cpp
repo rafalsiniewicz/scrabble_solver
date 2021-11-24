@@ -30,6 +30,17 @@ void initialize_trie(Trie* head)
 
 //     return wc;
 // }
+short int count_non_alpha(string str)
+{
+    short int nr_of_non_alpha = 0;
+    for(auto &ch: str)
+    {
+        if (!isalpha(ch))
+            nr_of_non_alpha++;
+    }
+    return nr_of_non_alpha;
+}
+
 void get_all_words_from_letters(const string word, const string letters, Trie* head)
 {
     string new_word = word;
@@ -39,27 +50,60 @@ void get_all_words_from_letters(const string word, const string letters, Trie* h
     if (pos != std::string::npos)    
         letters_new.erase(pos,1);
     // subsets.push_back(new_word);
+    short nr_of_letters = 0;
     for (std::string::size_type i = 0; i < letters_new.size(); i++) {
-        new_word += letters_new[i];
+        // getchar();
+        // if (new_word.size() < max_length)
+        // {
+            // cout << new_word.size() << endl;
+            new_word += letters_new[i];
+        // }
+        // cout << new_word << endl;
+        // if(!isalpha(letters_new[i]) && !isalpha(letters_new[i+1]) && letters_new[i+1] != '\0')
+        // {
+        //     // cout << "letters_new[i] = " << int(letters_new[i]) << " " << "letters_new[i+1] = " << int(letters_new[i+1]) << endl;
+        //     nr_of_letters++;
+        //     if (nr_of_letters % 2 == 0)
+        //         continue;
+        // }
+        // cout << "new_word = " << new_word << endl;
         if(startsWith(head, new_word.c_str()))
         {
-            subsets.push_back(new_word);
+            // cout << new_word << endl;
+            if (count_non_alpha(new_word) % 2 == 0)
+                subsets.push_back(new_word);
+            // for(auto& s: subsets)
+            //     cout << s << " " << endl;
             get_all_words_from_letters(new_word, letters_new, head);
         }
-        new_word = word;
+        new_word = word;  
     }
 }
 
 int calculate_points(string word)
 {
-    std::map<char, int> LETTER_POINTS = {
-        { 'A', 1 }, { 'Ą', 5 }, { 'B', 3 }, { 'C', 2 }, { 'Ć', 6 }, { 'D', 2 }, { 'E', 1 }, { 'Ę', 5 }, { 'F', 5 }, { 'G', 3 }, { 'H', 3 }, { 'I', 1 }, 
-        { 'J', 3 }, { 'K', 2 }, { 'L', 2 }, { 'Ł', 3 }, { 'M', 2 }, { 'N', 1 }, { 'Ń', 7 }, { 'O', 1 }, { 'Ó', 5 }, { 'P', 2 }, { 'R', 1 }, { 'S', 1 }, 
-        { 'Ś', 5 }, { 'T', 2 }, { 'U', 3 }, { 'W', 1 }, { 'Y', 2 }, { 'Z', 1 }, { 'Ź', 9 }, { 'Ż', 5 }
+    std::map<string, int> LETTER_POINTS = {
+        { "a", 1 }, { "ą", 5 }, { "b", 3 }, { "c", 2 }, { "ć", 6 }, { "d", 2 }, { "e", 1 }, { "ę", 5 }, { "f", 5 }, { "g", 3 }, { "h", 3 }, { "i", 1 }, 
+        { "j", 3 }, { "k", 2 }, { "l", 2 }, { "ł", 3 }, { "m", 2 }, { "n", 1 }, { "ń", 7 }, { "o", 1 }, { "ó", 5 }, { "p", 2 }, { "r", 1 }, { "s", 1 }, 
+        { "ś", 5 }, { "t", 2 }, { "u", 3 }, { "w", 1 }, { "y", 2 }, { "z", 1 }, { "ź", 9 }, { "ż", 5 }
     };
     int points = 0;
+    string temp = "";
     for (auto &ch: word)
-        points += LETTER_POINTS[toupper(ch)];
+    {
+        if (!isalpha(ch))
+        {
+            temp += toupper(ch);
+            if (count_non_alpha(temp) != 2)
+                continue;
+        }
+        else
+        {
+            temp += toupper(ch);
+        }
+        points += LETTER_POINTS[temp];
+        temp = "";
+    }
     return points;
 }
     
