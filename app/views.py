@@ -47,7 +47,7 @@ def get_words_from_letters(request, *args, **kwargs):
         if apps.get_app_config('app').use_cpp_server:
             letters = [ch for ch in request.GET['letters'].lower()]
             s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)         # Create a socket object
-            server_address = 'socket'
+            server_address = 'cpp/socket'
             s.connect(server_address)
             s.sendall(''.join(letters).encode())
             data = s.recv(1024*(len(letters)**5)) 

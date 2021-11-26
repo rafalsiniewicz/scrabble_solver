@@ -22,14 +22,6 @@ void initialize_trie(Trie* head)
     std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[us]" << std::endl;
 }
 
-// TODO remove it below as its not used
-// const wchar_t *GetWC(const char *c, const size_t size)
-// {
-//     wchar_t* wc = new wchar_t[size];
-//     mbstowcs (wc, c, size);
-
-//     return wc;
-// }
 short int count_non_alpha(string str)
 {
     short int nr_of_non_alpha = 0;
@@ -49,31 +41,13 @@ void get_all_words_from_letters(const string word, const string letters, Trie* h
     auto pos = letters_new.find(word.back());
     if (pos != std::string::npos)    
         letters_new.erase(pos,1);
-    // subsets.push_back(new_word);
     short nr_of_letters = 0;
     for (std::string::size_type i = 0; i < letters_new.size(); i++) {
-        // getchar();
-        // if (new_word.size() < max_length)
-        // {
-            // cout << new_word.size() << endl;
-            new_word += letters_new[i];
-        // }
-        // cout << new_word << endl;
-        // if(!isalpha(letters_new[i]) && !isalpha(letters_new[i+1]) && letters_new[i+1] != '\0')
-        // {
-        //     // cout << "letters_new[i] = " << int(letters_new[i]) << " " << "letters_new[i+1] = " << int(letters_new[i+1]) << endl;
-        //     nr_of_letters++;
-        //     if (nr_of_letters % 2 == 0)
-        //         continue;
-        // }
-        // cout << "new_word = " << new_word << endl;
+        new_word += letters_new[i];
         if(startsWith(head, new_word.c_str()))
         {
-            // cout << new_word << endl;
             if (count_non_alpha(new_word) % 2 == 0)
                 subsets.push_back(new_word);
-            // for(auto& s: subsets)
-            //     cout << s << " " << endl;
             get_all_words_from_letters(new_word, letters_new, head);
         }
         new_word = word;  
@@ -123,16 +97,7 @@ int main(int argc, char const *argv[])
         exit(EXIT_FAILURE);
     }
        
-    // Forcefully attaching socket to the port 8080
-    // if (setsockopt(server_fd, SOL_SOCKET, SO_REUSEADDR | SO_REUSEPORT,
-    //                                               &opt, sizeof(opt)))
-    // {
-    //     perror("setsockopt");
-    //     exit(EXIT_FAILURE);
-    // }
     address.sun_family = AF_UNIX;
-    // address.sin_addr.s_addr = INADDR_ANY;
-    // address.sin_port = htons( PORT );
     char *path = strcpy(address.sun_path, "socket");
     unlink(path);
 
@@ -159,13 +124,6 @@ int main(int argc, char const *argv[])
     }
     std::chrono::steady_clock::time_point end = std::chrono::steady_clock::now();
     std::cout << "Time difference = " << std::chrono::duration_cast<std::chrono::microseconds>(end - begin).count() << "[us]" << std::endl;
-    // wstring str = L"aą";
-    // wcout << "here " << search(head, str) << endl; 
-    // cout << "here " << search(head, L"aa") << endl; 
-    // cout << "here " << search(head, L"baa") << endl; 
-    // cout << "here " << search(head, L"babć") << endl; 
-    // wstring str1 = L"aaa";
-    // wcout << str1;
 
     while(1)
     {
@@ -184,28 +142,15 @@ int main(int argc, char const *argv[])
         {
             char buffer[1024] = {0};
             valread = read( new_socket , buffer, 1024);
-            // for(int i = 0; buffer[i] != '\0'; ++i) {
-            //     ++size;
-            // }
-            // wstring ws(&buffer[0], &buffer[size]);
-            // const wchar_t* ws = GetWC(buffer, size + 1);
-            // cout << buffer << endl;
             subsets.clear();
             string letters(buffer);
             for(auto &let: letters)
             {
                 string str{let};
-                // subsets.push_back(str);
                 get_all_words_from_letters(str, letters, head);
-                // thread th(get_all_words_from_letters, str, letters, head);
-                // threads.push_back(move(th));
             }
-            // cout << ws << endl;
-            // wcout << ws << endl;
             
             string response = "{";
-            // cout << response << endl;
-            // cout << &response << endl;
             for (auto w: subsets)
             {
                 response += "\"";
@@ -224,22 +169,7 @@ int main(int argc, char const *argv[])
             response += "}";
             cout << response << endl;
             if (send(new_socket , response.c_str(), response.length() , MSG_NOSIGNAL) < 0)
-                break;
-            // if (search(head, ws.c_str()) == 1)
-            // {
-            //     if (send(new_socket , yes.c_str(), yes.length() , MSG_NOSIGNAL) < 0)
-            //         break;
-            // }
-            // else if (search(head, ws.c_str()) == 0)
-            // {
-            //     if (send(new_socket , no.c_str(), no.length() , MSG_NOSIGNAL) < 0)
-            //         break;
-            // }
-            // printf("%s\n",buffer );
-            // const void* response = reinterpret_cast<const void*>(search(head, ws));
-            // send(new_socket , response, 1 , 0 );
-            // printf("Hello message sent\n");
-            
+                break;       
         }
         
     }

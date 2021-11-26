@@ -26,12 +26,12 @@ class AppConfig(AppConfig):
         if self.use_cpp_server:
             if 'runserver' in sys.argv:
                 # pass
-                proc = Popen('chmod +x server', shell=True,
+                proc = Popen('chmod +x cpp/server', shell=True,
                     stdin=None, stdout=None, stderr=None, close_fds=True)
-                proc2 = Popen('./server', shell=True,
+                proc2 = Popen('./cpp/server', shell=True,
                     stdin=None, stdout=None, stderr=None, close_fds=True)
                 time.sleep(3)
-                proc3 = Popen('chmod +x socket', shell=True,
+                proc3 = Popen('chmod +x cpp/socket', shell=True,
                     stdin=None, stdout=None, stderr=None, close_fds=True)
                 
             # p = Process(target=run_server)
