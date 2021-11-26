@@ -9,10 +9,15 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from .serializers import WordSerializer
 from django.http import JsonResponse
+from django.views.generic import View
 import datetime
 import socket               # Import socket module
 import json
 
+
+class FrontendRenderView(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, "templates/index.html", {})
 
 class WordViewSet(viewsets.ModelViewSet):
     """

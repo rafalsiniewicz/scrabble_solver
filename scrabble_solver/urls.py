@@ -14,10 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, re_path
 from rest_framework import routers
 from app import views
-from app.views import get_words_from_letters
 
 router = routers.DefaultRouter()
 router.get_api_root_view().cls.__name__ = "Root API name"
@@ -31,6 +30,7 @@ router.register(r'words', views.WordViewSet)
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(router.urls)),
-    path('words-from-letters/', get_words_from_letters),
+    path('words-from-letters/', views.get_words_from_letters),
+    re_path(r'(?P<path>.*)', views.FrontendRenderView.as_view(), name='home')
     # path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
