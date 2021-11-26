@@ -3,6 +3,11 @@ const URL = 'https://scrabble-solver-app.herokuapp.com/words-from-letters/?lette
       METHOD = 'GET';
 
 function checkWordCorrectness(letters) {
+  /*
+  Use provided letters in GET request and get all existing words and their points.
+  Args:
+    letters (array): provided letters
+  */
   const Http = new XMLHttpRequest()
   var url = URL + letters
 
@@ -22,17 +27,22 @@ function checkWordCorrectness(letters) {
       } else {
          console.log('[Error] Http.status = ' + Http.status + '. Problem with request from: ' + URL)
       }
-        get_list_of_existing_words()
+      getListOfExistingWords();
     }
   }
 }
 
-function get_list_of_existing_words() {
-  existing_words = sort_dict_by_value(existing_words)
-  generate_table((innerhtml = existing_words))
+function getListOfExistingWords() {
+  existing_words = sortDictByValue(existing_words)
+  generateTable((innerhtml = existing_words))
 }
 
-function sort_dict_by_value(dict) {
+function sortDictByValue(dict) {
+  /*
+  Sort dict by values.
+  Args:
+    dict (dict): dict to be sorted by values
+  */
   var values = Object.keys(dict).map(function (key) {
     return dict[key]
   })
@@ -52,10 +62,12 @@ function sort_dict_by_value(dict) {
   return sorted_dict
 }
 
-module.exports = {sort_dict_by_value, factorial};
-
-function generate_table(innerhtml) {
-
+function generateTable(innerhtml) {
+  /*
+  Generate table for existing words with points.
+  Args:
+    innerhtml
+  */
   var body = document.getElementsByTagName('body')[0]
   t = document.getElementById('table')
   if (t != null) {
@@ -107,20 +119,31 @@ function generate_table(innerhtml) {
   tbl.setAttribute('border', '2')
   // document.getElementById("demo2").innerHTML = innerhtml;
 }
-function get_letters() {
+function getLetters() {
   return document.getElementById('letters').value.replace(/\s/g, '').replaceAll(/[^a-zA-Z\d\s:ąęćżźńśłó]/g, '');
 }
 
-function reset_variables() {
+function resetVariables() {
+  /*
+  Reset global variables
+  */
   existing_words = {}
   words = {}
   words_counter = 0
 }
 
-function run_check()
+function runCheck()
 {
-  reset_variables();
-  letters = get_letters();
+  /*
+  Find all of the existing words with their points, basing on provided letters.
+  Steps:
+  1. Reset global variables
+  2. Get letters provided by user
+  3. Use provided letters in API endpoint
+  4. Get list of existing words with points
+  */
+  resetVariables();
+  letters = getLetters();
   checkWordCorrectness(letters);
 
 }
