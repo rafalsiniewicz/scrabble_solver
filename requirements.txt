@@ -4,3 +4,4 @@ django_heroku==0.3.1
 requests==2.24.0
 django-cors-headers
 djangorestframework
+gunicorn
