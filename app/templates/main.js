@@ -87,6 +87,8 @@ function generateTable(innerhtml) {
     var headerText = document.createTextNode(header_text[i])
     header.appendChild(headerText)
     row.appendChild(header)
+    header.style.backgroundColor = "#3399ff"
+    header.style.color = "white"
   }
   tblBody.appendChild(row)
 
