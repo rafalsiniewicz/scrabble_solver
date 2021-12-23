@@ -16,4 +16,5 @@
 /.vscode
 .gitignore.txt
 *.md
+/app/templates/documentation
 
