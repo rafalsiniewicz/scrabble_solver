@@ -1,3 +1,4 @@
+![pipeline](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pipeline.yml/badge.svg)
 # scrabble_solver
 Scrabble solver is the website application that allows to find the best words for the scrabble game basing on provided letters.
 # Backend:
