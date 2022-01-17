@@ -1,4 +1,4 @@
-[![Pipeline](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pipeline.yml/badge.svg?branch=master)](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pipeline.yml)
+[![Pipeline](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pipeline.yml/badge.svg)](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pipeline.yml)
 # scrabble_solver
 Scrabble solver is the website application that allows to find the best words for the scrabble game basing on provided letters.
 # Backend:
