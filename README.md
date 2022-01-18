@@ -16,3 +16,7 @@ Scrabble solver is the website application that allows to find the best words fo
 
 # Documenation
 - [docs](https://scrabble-solver.netlify.app/documentation/site/index.html)
+
+# References
+1. https://scrabblemania.pl/
+2. http://www.pfs.org.pl/osps.php
