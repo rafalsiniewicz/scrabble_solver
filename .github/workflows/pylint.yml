@@ -1,6 +1,8 @@
 name: Pylint
 
 on: [push]
+env:
+  PYTHONPATH: $PWD
 
 jobs:
   pylint:
@@ -22,7 +24,7 @@ jobs:
         export PYTHONPATH=$PWD
     - name: Analysing the code with pylint
       run: |
-        pylint $(find . -name "*.py" | xargs) --fail-under=8 --ignore=app/migrations
+        pylint $(find . -name "*.py" | xargs) --fail-under=8 --ignore=/app/migrations,manage.py
         
       
   
