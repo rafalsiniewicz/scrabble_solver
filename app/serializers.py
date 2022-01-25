@@ -7,4 +7,3 @@ class WordSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Word
         fields = ['id', 'word', 'points']
-

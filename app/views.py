@@ -45,8 +45,8 @@ class WordViewSet(viewsets.ModelViewSet):
 def get_words_from_letters(request, *args, **kwargs):
     if request.method == 'GET':
         response = {}
+        letters = list(request.GET['letters'].lower())
         if apps.get_app_config('app').use_cpp_server:
-            letters = [ch for ch in request.GET['letters'].lower()]
             s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)         # Create a socket object
             server_address = 'cpp/socket'
             s.connect(server_address)
@@ -59,7 +59,6 @@ def get_words_from_letters(request, *args, **kwargs):
             Words.all_subsets = []
             trie = apps.get_app_config('app').trie
             start = datetime.datetime.now()
-            letters = [ch for ch in request.GET['letters'].lower()]
             for l in letters:
                 Words.get_all_subsets(l, letters, trie)
             all_words_from_letters = Words.all_subsets

@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 import os.path
-import sys
 import requests
-from django.utils.encoding import force_str
 
 URL = 'http://127.0.0.1:8000/words/'
 LETTER_POINTS = {'A': 1, 'Ą': 5, 'B': 3, 'C': 2, 'Ć': 6, 'D': 2, 'E': 1, 'Ę': 5, 'F': 5, 'G': 3, 'H': 3, 'I': 1, 'J': 3,
@@ -48,7 +46,7 @@ def calculateWordPoints(word):
 #         word = str(line.strip('\n'))
 #         points = calculateWordPoints(word=word)
 #         lines[i] = lines[i].strip('\n') + " " + str(points) + "\n"
-#         i += 1 
+#         i += 1
 #         print(i)
 
 #     file = open(os.path.dirname(__file__) + "\..\sjp-20210625\slowa2.txt", 'w', encoding='utf-8')

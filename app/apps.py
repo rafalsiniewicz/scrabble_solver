@@ -3,14 +3,15 @@ import os
 from subprocess import Popen
 import sys
 from typing import Optional, Any
+from multiprocessing import Process
+import subprocess
 
 from django.apps import AppConfig
 
 from .trie import Trie
 
 
-from multiprocessing import Process
-import subprocess
+
 
 
 # def run_server():
