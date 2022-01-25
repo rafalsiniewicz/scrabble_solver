@@ -1,2 +1,7 @@
 site_name: Documentation
+site_url: https://scrabble-solver.netlify.app/documentation/site/
 theme: readthedocs
+nav:
+    - Home: index.md
+    - Overview: overview.md
+    - API: api.md
