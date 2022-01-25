@@ -3,8 +3,8 @@
 Scrabble solver is the website application that allows to find the best words for the scrabble board game basing on provided letters.
 
 ## Covered topics 
-- [Overview](overview.md)
-- [API](api.md)
+- [Overview](https://scrabble-solver.netlify.app/documentation/site/overview/index.html)
+- [API](https://scrabble-solver.netlify.app/documentation/site/api/index.html)
 
 ## References
 - Project repository: [scrabble_solver](https://github.com/rafalsiniewicz/scrabble_solver)
