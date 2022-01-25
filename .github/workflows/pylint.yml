@@ -18,9 +18,12 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pylint
+        python -m pip install -r requirements.txt
+        export PYTHONPATH=$PWD
     - name: Analysing the code with pylint
       run: |
-        pylint $(find . -name "*.py" | xargs) --fail-under=8
+        pylint $(find . \( -path '**/app/migrations' \) -prune -false -o \( ! -name 'manage.py' \) -name "*.py" | xargs) --fail-under=8 
+        
         
       
   
