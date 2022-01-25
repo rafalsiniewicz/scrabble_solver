@@ -3,9 +3,12 @@ import os.path
 import sys
 import requests
 from django.utils.encoding import force_str
+
 URL = 'http://127.0.0.1:8000/words/'
-LETTER_POINTS = {'A': 1, 'Ą': 5, 'B': 3, 'C': 2, 'Ć': 6, 'D': 2, 'E': 1, 'Ę': 5, 'F': 5, 'G': 3, 'H': 3, 'I': 1, 'J': 3, 'K': 2, 'L': 2, 'Ł': 3, 'M': 2, 'N': 1, 'Ń': 7, 'O': 1, 
-'Ó': 5, 'P': 2, 'R': 1, 'S': 1, 'Ś': 5, 'T': 2, 'U': 3, 'W': 1, 'Y': 2, 'Z': 1, 'Ź': 9, 'Ż': 5}
+LETTER_POINTS = {'A': 1, 'Ą': 5, 'B': 3, 'C': 2, 'Ć': 6, 'D': 2, 'E': 1, 'Ę': 5, 'F': 5, 'G': 3, 'H': 3, 'I': 1, 'J': 3,
+                 'K': 2, 'L': 2, 'Ł': 3, 'M': 2, 'N': 1, 'Ń': 7, 'O': 1,
+                 'Ó': 5, 'P': 2, 'R': 1, 'S': 1, 'Ś': 5, 'T': 2, 'U': 3, 'W': 1, 'Y': 2, 'Z': 1, 'Ź': 9, 'Ż': 5}
+
 
 def calculateWordPoints(word):
     points = 0
@@ -47,12 +50,10 @@ def calculateWordPoints(word):
 #         lines[i] = lines[i].strip('\n') + " " + str(points) + "\n"
 #         i += 1 
 #         print(i)
-    
+
 #     file = open(os.path.dirname(__file__) + "\..\sjp-20210625\slowa2.txt", 'w', encoding='utf-8')
 #     file.writelines(lines)
 #     file.close()
-
-
 
 
 # write_points()
