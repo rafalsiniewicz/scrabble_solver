@@ -1,5 +1,7 @@
 [![Pylint](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pylint.yml/badge.svg)](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/pylint.yml)
 [![UnitTests](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/unit_tests.yml/badge.svg)](https://github.com/rafalsiniewicz/scrabble_solver/actions/workflows/unit_tests.yml)
+![coverage](https://user-images.githubusercontent.com/36672426/151042288-ef4f3f34-58e6-43ae-ad63-e19dcf8d16bc.svg)
+
 # scrabble_solver
 Scrabble solver is the website application that allows to find the best words for the scrabble game basing on provided letters.
 # Backend:
