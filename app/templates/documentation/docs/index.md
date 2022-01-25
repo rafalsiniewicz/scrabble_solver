@@ -1,17 +1,13 @@
-# Welcome to MkDocs
+# Scrabble solver
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+Scrabble solver is the website application that allows to find the best words for the scrabble board game basing on provided letters.
 
-## Commands
+## Covered topics 
+- [Overview](overview.md)
+- [API](api.md)
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
-
-## Project layout
-
-    mkdocs.yml    # The configuration file.
-    docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+## References
+- Project repository: [scrabble_solver](https://github.com/rafalsiniewicz/scrabble_solver)
+- https://scrabblemania.pl/
+- http://www.pfs.org.pl/osps.php
+- List of all words allowed in games by SJP.PL (15 letters max.): https://sjp.pl/slownik/growy/
