@@ -1,12 +1,17 @@
-from django.apps import AppConfig
-from .trie import Trie
-from typing import Optional, Any
 import time
 import os
-from multiprocessing import Process
-import subprocess
 from subprocess import Popen
 import sys
+from typing import Optional, Any
+
+from django.apps import AppConfig
+
+from .trie import Trie
+
+
+from multiprocessing import Process
+import subprocess
+
 
 # def run_server():
 # 	subprocess.run('./server', shell=True)

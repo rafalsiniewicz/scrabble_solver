@@ -1,8 +1,7 @@
-from typing import List
-from objsize import get_deep_size
-from itertools import cycle
-import os
 import time
+
+from objsize import get_deep_size
+
 
 
 class Trie(object):

@@ -1,5 +1,6 @@
-from .models import Word
 from rest_framework import serializers
+
+from .models import Word
 
 
 class WordSerializer(serializers.HyperlinkedModelSerializer):

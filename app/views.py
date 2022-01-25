@@ -1,18 +1,19 @@
-import threading
-from django.shortcuts import render
-from rest_framework import response
-from rest_framework.response import Response
-from app.words import Words
-from django.apps import apps
-from .models import Word
-from rest_framework import viewsets
-from rest_framework import permissions
-from .serializers import WordSerializer
-from django.http import JsonResponse
-from django.views.generic import View
 import datetime
 import socket               # Import socket module
 import json
+
+from rest_framework import viewsets
+from rest_framework.response import Response
+from django.shortcuts import render
+from django.apps import apps
+from django.http import JsonResponse
+from django.views.generic import View
+
+from app.words import Words
+from .models import Word
+from .serializers import WordSerializer
+
+
 
 
 class FrontendRenderView(View):
