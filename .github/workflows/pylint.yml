@@ -22,7 +22,7 @@ jobs:
         export PYTHONPATH=$PWD
     - name: Analysing the code with pylint
       run: |
-        pylint $(find . \( -path '**/app/migrations' -prune -false -o -path 'manage.py' -prune -false \) -o -name "*.py" | xargs) --fail-under=8 
+        pylint $(find . \( -path '**/app/migrations' -prune -false -o -name 'manage.py' -prune -false \) -o -name "*.py" | xargs) --fail-under=8 
         
         
       
