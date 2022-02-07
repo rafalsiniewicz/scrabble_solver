@@ -1,3 +1,5 @@
 /node_modules
 /coverage
 *.pyc
+/app/__pycache__
+/scrabble_solver/__pycache__
