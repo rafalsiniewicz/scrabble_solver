@@ -18,7 +18,7 @@ from .serializers import WordSerializer
 
 class FrontendRenderView(View):
     def get(self, request, *args, **kwargs):
-        return render(request, "templates/index.html", {})
+        return render(request, "index.html", {})
 
 class WordViewSet(viewsets.ModelViewSet):
     """
