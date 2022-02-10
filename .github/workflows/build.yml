@@ -14,4 +14,6 @@ jobs:
         python -m pip install -r requirements.txt
     - name: Analysing the code with pylint
       run: |
+        mkdir public
+        cp -r app/templates public; cp -r app/static public
         cd app/templates/documentation; mkdocs build
