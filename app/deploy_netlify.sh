@@ -14,3 +14,5 @@ echo "cd public;"
 cd public;
 echo "sed -i 's/..\/static\/css\/style.css/style.css/g' index.html;"
 sed -i 's/..\/static\/css\/style.css/style.css/g' index.html;
+echo "sed -i 's/..\/static\/js\/main.js/main.js/g' index.html;"
+sed -i 's/..\/static\/js\/main.js/main.js/g' index.html;
