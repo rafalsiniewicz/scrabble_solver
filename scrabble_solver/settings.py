@@ -66,6 +66,7 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'app.apps.AppConfig',
+    'scrabble_solver'
 ]
 
 MIDDLEWARE = [
