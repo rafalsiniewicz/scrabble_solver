@@ -5,12 +5,12 @@
 
 # Scrabble solver
 
-Table of contents:
-- [About the project](#about_the_project)
-- [Technologies used](#technologies_used)
+## Table of contents
+- [About the project](#about-the-project)
+- [Technologies used](#technologies-used)
   - [Backend](#backend)
   - [Frontend](#frontend)
-- [Getting started](#getting_started)
+- [Getting started](#getting-started)
   - [Installation](#installation)
   - [Docker](#docker)
 - [Roadmap](#roadmap)
