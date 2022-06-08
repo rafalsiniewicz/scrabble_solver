@@ -52,8 +52,8 @@ docker compose up
 2. 
 
 # Roadmap
-- [ ] - Create backend functionality
-- [ ] - Create frontend
+- [x] - Create backend functionality
+- [x] - Create frontend
 - [ ] - Create tests
 - [ ] - Add sign up/sign in options
 - [ ] - Create documentation
